@@ -7,24 +7,73 @@ cor_fundo = '#12141f'
 cor_fundo2 = '#17192b'
 cor_branco = '#ffffff'
 cor_laranja = '#ff6647'
+cor_azul = '#2C94F5'
 
-'''def pegar_cotacoes():
-    requisicao = requests.get("https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,BTC-BRL")
+def limpar():
+    texto_resultado.config(text='')
+    texto_meuip.config(text='')
+    texto_ip.config(text='')
 
-    requisicao_dic = requisicao.json()
+def requisicao_ip():
+    ip = ip_var.get()
+    requisicaoip = requests.get('http://ip-api.com/json/{}'.format(ip))
+    requisicaoip2 = requisicaoip.json()
 
-    cotacao_dolar = requisicao_dic['USDBRL']['bid']
-    cotacao_euro = requisicao_dic['EURBRL']['bid']
-    cotacao_btc = requisicao_dic['BTCBRL']['bid']
+    ip = requisicaoip2 ['query']
+    pais1 = requisicaoip2['country']
+    regiao = requisicaoip2['regionName']
+    cidade = requisicaoip2['city']
+    provedor = requisicaoip2['isp']
+    latitude = requisicaoip2['lat']
+    longitude = requisicaoip2['lon']
 
-    texto = f'
-    DÓLAR: {cotacao_dolar}
-    EURO: {cotacao_euro}
-    BTC: {cotacao_btc}'
-   
-    texto_resultado['text'] = texto
-'''
-def pegar_cotacoes():
+    texto = f'''
+    ❖IP: {ip}
+
+    ❖País: {pais1}
+
+    ❖Regiao: {regiao}
+
+    ❖Cidade: {cidade}
+
+    ❖Provedor: {provedor}
+
+    ❖Latitude: {latitude}
+
+    ❖Longitude: {longitude}
+    '''
+    texto_ip['text'] = texto
+
+def requisicao_meuip():
+    requisicaomeuip = requests.get('http://ip-api.com/json/')
+    requisicaomeuip2 = requisicaomeuip.json()
+    
+    ip = requisicaomeuip2 ['query']
+    pais = requisicaomeuip2['country']
+    regiao = requisicaomeuip2['regionName']
+    cidade = requisicaomeuip2['city']
+    provedor = requisicaomeuip2['isp']
+    latitude = requisicaomeuip2['lat']
+    longitude = requisicaomeuip2['lon']
+
+    texto = f'''
+    ❖IP: {ip}
+
+    ❖País: {pais}
+
+    ❖Regiao: {regiao}
+
+    ❖Cidade: {cidade}
+
+    ❖Provedor: {provedor}
+
+    ❖Latitude: {latitude}
+
+    ❖Longitude: {longitude}
+    '''
+    texto_meuip['text'] = texto
+
+def requisicao_cep():
     cep = cep_var.get()
     requisicao = requests.get('https://cep.awesomeapi.com.br/json/{}'.format(cep))
     requisicao_cep = requisicao.json()
@@ -37,15 +86,21 @@ def pegar_cotacoes():
     latitude = requisicao_cep['lat']
     longitude = requisicao_cep['lng']
     texto = f'''
-    CEP: {cep}
-    Endereço: {endereco}
-    Bairro: {bairro}
-    Cidade: {cidade}
-    Estado: {estado}
-    DDD: {ddd}
-    Latitude: {'lat'}
+    ❖CEP: {cep}
+
+    ❖Endereço: {endereco}
+
+    ❖Bairro: {bairro}
+
+    ❖Cidade: {cidade}
+
+    ❖Estado: {estado}
+
+    ❖DDD: {ddd}
+
+    ❖Latitude: {latitude}
     
-    '''
+    ❖Longitude: {longitude}'''
     texto_resultado['text'] = texto
 
 # Criar a janela principal
@@ -73,7 +128,6 @@ def save_input_value(entry, variable):
 # Variáveis para armazenar os valores digitados
 cnpj_var = tk.StringVar()
 ip_var = tk.StringVar()
-meuip_var = tk.StringVar()
 cep_var = tk.StringVar()
 
 # Campos de entrada
@@ -88,33 +142,65 @@ ip_entry = tk.Entry(janela, width=20, relief=SUNKEN)
 ip_entry.place(x=3, y=181)
 
 meuip_label = tk.Label(janela, text="MEU IP:", bg=cor_fundo2, fg=cor_branco, font='ivy 10 bold', relief=RAISED)
-meuip_label.place(x=3, y=277)
-meuip_entry = tk.Entry(janela, width=20, relief=SUNKEN)
-meuip_entry.place(x=3, y=301)
+meuip_label.place(x=3, y=404)
 
 cep_label = tk.Label(janela, text="CEP:", bg=cor_fundo2, fg=cor_branco, font='ivy 10 bold', relief=RAISED)
-cep_label.place(x=3, y=380)
+cep_label.place(x=3, y=278)
 cep_entry = tk.Entry(janela, width=20, relief=SUNKEN)
-cep_entry.place(x=3, y=404)
+cep_entry.place(x=3, y=301)
 
 # Botões
 cnpj_button = tk.Button(janela, text="OK", bg=cor_laranja, fg=cor_branco, font=('ivy 8 bold'), relief=RAISED, overrelief=RIDGE, command=lambda: save_input_value(cnpj_entry, cnpj_var))
 cnpj_button.place(x=130, y=80)
 
-print_button = tk.Button(janela, text="print", command=pegar_cotacoes)
-print_button.place(x=160, y=80)
-texto_resultado = Label(janela, text='', bg=cor_fundo, fg=cor_branco,font=('ivy 10')) #Resultado da consulta
-texto_resultado.grid(column=0, row=2) #grid redimensiona texto
-
-
 ip_button = tk.Button(janela, text="OK",bg=cor_laranja, fg=cor_branco, font=('ivy 8 bold'), relief=RAISED, overrelief=RIDGE, command=lambda: save_input_value(ip_entry, ip_var))
 ip_button.place(x=130, y=178)
 
-meuip_button = tk.Button(janela, text="OK", bg=cor_laranja, fg=cor_branco, font=('ivy 8 bold'), relief=RAISED, overrelief=RIDGE, command=lambda: save_input_value(meuip_entry, meuip_var))
-meuip_button.place(x=130, y=298)
 
 cep_button = tk.Button(janela, text="OK", bg=cor_laranja, fg=cor_branco, font=('ivy 8 bold'), relief=RAISED, overrelief=RIDGE, command=lambda: save_input_value(cep_entry, cep_var))
-cep_button.place(x=130, y=401)
+cep_button.place(x=130, y=298)
+
+#PRINT CEP
+print_button = tk.Button(janela, text="Print", bg=cor_azul,font=' ivy 8 bold', relief=RAISED, overrelief=RIDGE, command=requisicao_cep)
+print_button.place(x=160, y=298)
+texto_resultado = Label(janela, text='', bg=cor_fundo2, fg=cor_branco, justify= LEFT, font=('ivy 13')) #Resultado da consulta
+texto_resultado.place(x=220, y=80)
+
+#PRINT MEU IP
+print_button = tk.Button(janela, text="Print", font=' ivy 8 bold', bg=cor_azul, fg=cor_fundo2 , relief=RAISED, overrelief=RIDGE, command=requisicao_meuip)
+print_button.place(x=60, y=403)
+texto_meuip = Label(janela, text='', bg=cor_fundo2, fg=cor_branco, justify= LEFT, font=('ivy 15')) #Resultado da consulta
+texto_meuip.place(x=220, y=80)
+
+#PRINT IP
+print_button = tk.Button(janela, text="Print", font=' ivy 8 bold', bg=cor_azul, fg=cor_fundo2 , relief=RAISED, overrelief=RIDGE, command=requisicao_ip)
+print_button.place(x=160, y=178)
+texto_ip = Label(janela, text='', bg=cor_fundo2, fg=cor_branco, justify= LEFT, font=('ivy 15')) #Resultado da consulta
+texto_ip.place(x=220, y=80)
+
+#PRINT CNPJ
+print_button = tk.Button(janela, text="Print", font=' ivy 8 bold', bg=cor_azul, fg=cor_fundo2 , relief=RAISED, overrelief=RIDGE, command=requisicao_ip)
+print_button.place(x=160, y=80)
+texto_ip = Label(janela, text='', bg=cor_fundo2, fg=cor_branco, justify= LEFT, font=('ivy 15')) #Resultado da consulta
+texto_ip.place(x=220, y=80)
+
+
+
+
+#bbotao limpar
+b1 = Button(janela, command= limpar, text="Limpar", bg=cor_fundo2, fg=cor_branco, relief=RAISED, overrelief=RIDGE)
+b1.place(x=637, y=70)
+
+
+
+
+
+
+
+
+
+
+
 
 # Iniciar a interface gráfica
 janela.mainloop()
