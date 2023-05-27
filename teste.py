@@ -13,6 +13,7 @@ def limpar():
     texto_resultado.config(text='')
     texto_meuip.config(text='')
     texto_ip.config(text='')
+    texto_cnpj.config(text='')
 
 def requisicao_ip():
     ip = ip_var.get()
@@ -103,6 +104,35 @@ def requisicao_cep():
     ❖Longitude: {longitude}'''
     texto_resultado['text'] = texto
 
+def requisicai_cnpj():
+    cnpj = cnpj_var.get()
+    requisicacnpj = requests.get('https://www.receitaws.com.br/v1/cnpj/{}'.format(cnpj))
+    requisicaocnpj2 = requisicacnpj.json()
+
+    cnpj = requisicaocnpj2['cnpj']
+    abertura = 
+    situacao = 
+    tipo = 
+    nome_fantasia = 
+    porte = 
+    atividade_principal = 
+    atividade_secundaria = 
+    logradouro = 
+    numero = 
+    complemento = 
+    municipio = 
+    bairro = 
+    uf = 
+    cep = 
+    email = 
+    telefone = 
+    ultima_atualizaçao = 
+    status = 
+    capital_social = 
+    
+
+
+
 # Criar a janela principal
 janela = tk.Tk()
 janela.title("Painel")
@@ -181,15 +211,15 @@ texto_ip.place(x=220, y=80)
 #PRINT CNPJ
 print_button = tk.Button(janela, text="Print", font=' ivy 8 bold', bg=cor_azul, fg=cor_fundo2 , relief=RAISED, overrelief=RIDGE, command=requisicao_ip)
 print_button.place(x=160, y=80)
-texto_ip = Label(janela, text='', bg=cor_fundo2, fg=cor_branco, justify= LEFT, font=('ivy 15')) #Resultado da consulta
-texto_ip.place(x=220, y=80)
+texto_cnpj = Label(janela, text='', bg=cor_fundo2, fg=cor_branco, justify= LEFT, font=('ivy 15')) #Resultado da consulta
+texto_cnpj.place(x=220, y=80)
 
 
 
 
 #bbotao limpar
-b1 = Button(janela, command= limpar, text="Limpar", bg=cor_fundo2, fg=cor_branco, relief=RAISED, overrelief=RIDGE)
-b1.place(x=637, y=70)
+b1 = Button(janela, command= limpar, text="Limpar", bg=cor_azul, fg=cor_fundo2, relief=RAISED, overrelief=RIDGE)
+b1.place(x=160, y=402)
 
 
 
