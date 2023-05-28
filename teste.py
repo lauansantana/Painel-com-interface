@@ -110,26 +110,43 @@ def requisicai_cnpj():
     requisicaocnpj2 = requisicacnpj.json()
 
     cnpj = requisicaocnpj2['cnpj']
-    abertura = 
-    situacao = 
-    tipo = 
-    nome_fantasia = 
-    porte = 
-    atividade_principal = 
-    atividade_secundaria = 
-    logradouro = 
-    numero = 
-    complemento = 
-    municipio = 
-    bairro = 
-    uf = 
-    cep = 
-    email = 
-    telefone = 
-    ultima_atualizaçao = 
-    status = 
-    capital_social = 
+    abertura = requisicaocnpj2['abertura']
+    situacao = requisicaocnpj2['tipo']
+    tipo = requisicaocnpj2['nome']
+    nome_fantasia = requisicaocnpj2['fantasia']
+    porte = requisicaocnpj2['porte']
+    atividade_principal = requisicaocnpj2['atividade_principal'][0]
+    atividade_secundaria = requisicaocnpj2['atividades_secundarias'][0]['text']
+    logradouro = requisicaocnpj2['logradouro']
+    numero = requisicaocnpj2['numero']
+    complemento = requisicaocnpj2['complemento']
+    municipio = requisicaocnpj2['municipio']
+    bairro = requisicaocnpj2['bairro']
+    uf = requisicaocnpj2['uf']
+    cep = requisicaocnpj2['cep']
+    email = requisicaocnpj2['email']
+    telefone = requisicaocnpj2['telefone']
+    ultima_atualizaçao = requisicaocnpj2['ultima_atualizacao']
+    status = requisicaocnpj2['status']
+    capital_social = requisicaocnpj2['capital_social']
     
+    texto = f'''
+    ❖CNPJ
+    ❖Abertura
+    ❖Situaçao
+    ❖
+    ❖
+    ❖
+    ❖
+    ❖
+    ❖
+    ❖
+    ❖
+    ❖
+    ❖
+    ❖
+
+    '''
 
 
 
