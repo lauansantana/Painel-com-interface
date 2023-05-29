@@ -238,23 +238,9 @@ print_button.place(x=160, y=80)
 texto_cnpj = Label(janela, text='', bg=cor_fundo2, fg=cor_branco, justify= LEFT, font=('ivy 13')) #Resultado da consulta
 texto_cnpj.place(x=220, y=70)
 
-
-
-
 #bbotao limpar
 b1 = Button(janela, command= limpar, text="Limpar", bg=cor_azul, fg=cor_fundo2, relief=RAISED, overrelief=RIDGE)
 b1.place(x=160, y=402)
-
-
-
-
-
-
-
-
-
-
-
 
 # Iniciar a interface gráfica
 janela.mainloop()
